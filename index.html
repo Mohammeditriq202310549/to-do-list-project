@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Daily Web Calendar</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="calendar-app">
+    <!-- Header Section -->
+    <header class="calendar-header">
+      <div class="title-row">
+        <svg class="calendar-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="4" width="18" height="17" rx="2" fill="#2b2b2b" stroke="#2b2b2b"/>
+          <line x1="7" y1="8" x2="17" y2="8" stroke="#ffffff" stroke-width="2"/>
+          <line x1="7" y1="12" x2="17" y2="12" stroke="#ffffff" stroke-width="2"/>
+          <line x1="7" y1="16" x2="17" y2="16" stroke="#ffffff" stroke-width="2"/>
+          <line x1="7" y1="4" x2="7" y2="2" stroke="#2b2b2b" stroke-width="2"/>
+          <line x1="17" y1="4" x2="17" y2="2" stroke="#2b2b2b" stroke-width="2"/>
+        </svg>
+        <h1 class="calendar-title">Your Daily Web Calendar</h1>
+      </div>
+      <p class="calendar-subtitle">
+        Small steps every day create big achievements. Stay focused, complete your tasks, and keep moving forward. 🚀
+      </p>
+      <div class="divider-line"></div>
+    </header>
+
+    <!-- Controls Row (Month & Day Dropdowns) -->
+    <div class="controls-row">
+      <div class="dropdown-wrapper">
+        <select id="monthSelect" class="custom-select">
+          <option value="" disabled selected>Enter the Month</option>
+          <option value="January">January</option>
+          <option value="February">February</option>
+          <option value="March">March</option>
+          <option value="April">April</option>
+          <option value="May">May</option>
+          <option value="June">June</option>
+          <option value="July">July</option>
+          <option value="August">August</option>
+          <option value="September">September</option>
+          <option value="October">October</option>
+          <option value="November">November</option>
+          <option value="December">December</option>
+        </select>
+        <span class="dropdown-arrow">▼</span>
+      </div>
+
+      <div class="dropdown-wrapper">
+        <select id="daySelect" class="custom-select">
+          <option value="" disabled selected>Enter the Day</option>
+          <!-- Days 1 to 31 will be generated -->
+        </select>
+        <span class="dropdown-arrow">▼</span>
+      </div>
+    </div>
+
+    <!-- Main Content Area: Task to do & Done task -->
+    <main class="tasks-container">
+      <!-- Left Column: Task to do -->
+      <section class="task-column todo-column">
+        <div class="section-title">
+          <span class="icon-star">✪</span>
+          <h2>Task to do</h2>
+        </div>
+        <div id="todoList" class="task-list">
+          <!-- Dynamic Task Items -->
+        </div>
+        <div class="button-group">
+          <button id="addBtn" class="btn btn-dark">Add</button>
+        </div>
+      </section>
+
+      <!-- Vertical Divider for Desktop -->
+      <div class="vertical-divider"></div>
+
+      <!-- Right Column: Done task -->
+      <section class="task-column done-column">
+        <div class="section-title">
+          <span class="icon-check">✔✔</span>
+          <h2>Done task</h2>
+        </div>
+        <div id="doneList" class="task-list">
+          <!-- Dynamic Done Items -->
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
