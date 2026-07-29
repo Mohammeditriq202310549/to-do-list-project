@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Your Daily Web Calendar</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="login-body">
+  <div class="login-card">
+    <!-- Top Lock Icon -->
+    <div class="login-icon-wrapper">
+      <svg class="login-lock-icon" viewBox="0 0 24 24" width="60" height="60" fill="#333333">
+        <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+      </svg>
+    </div>
+
+    <!-- Title -->
+    <div class="login-title-wrapper">
+      <h1 class="login-title">Login</h1>
+      <div class="login-title-underline"></div>
+    </div>
+
+    <!-- Error Alert Box -->
+    {% if error %}
+      <div style="background: #f8d7da; color: #721c24; padding: 0.6rem 1rem; border-radius: 6px; margin-bottom: 1rem; font-size: 0.85rem; text-align: center; border: 1px solid #f5c6cb;">
+        {{ error }}
+      </div>
+    {% endif %}
+
+    <!-- Login Form -->
+    <form action="/login" method="POST" class="login-form">
+      <!-- Username Field -->
+      <div class="input-group">
+        <span class="input-icon">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="#444444">
+            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+          </svg>
+        </span>
+        <input type="text" name="username" class="login-input" placeholder="Enter Your Username" required>
+      </div>
+
+      <!-- Password Field -->
+      <div class="input-group">
+        <span class="input-icon">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="#444444">
+            <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+          </svg>
+        </span>
+        <input type="password" name="password" class="login-input" placeholder="Enter Your Password" required>
+      </div>
+
+      <!-- Register Link -->
+      <div class="register-group">
+        <span>Don't have an account? </span>
+        <a href="/register" class="register-link">Register</a>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="login-btn-wrapper">
+        <button type="submit" class="btn-login-submit">Login</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

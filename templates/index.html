@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Daily Web Calendar</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="calendar-app">
+    <!-- Header Section -->
+    <header class="calendar-header">
+      <!-- User Welcome Banner & Logout -->
+      <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 1rem;">
+        <div style="font-size: 0.95rem; color: #155724; background: #d4edda; padding: 0.5rem 1rem; border-radius: 20px; display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid #c3e6cb; font-weight: 500;">
+          👋 <span>Welcome back, <strong>{{ session.get('username', 'User') }}</strong>!</span>
+        </div>
+        <a href="/logout" style="font-size: 0.85rem; color: #dc3545; text-decoration: none; font-weight: 600; padding: 0.4rem 0.8rem; border: 1px solid #dc3545; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#dc3545';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='#dc3545'">Logout</a>
+      </div>
+
+      <div class="title-row">
+        <svg class="calendar-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="4" width="18" height="17" rx="2" fill="#2b2b2b" stroke="#2b2b2b"/>
+          <line x1="7" y1="8" x2="17" y2="8" stroke="#ffffff" stroke-width="2"/>
+          <line x1="7" y1="12" x2="17" y2="12" stroke="#ffffff" stroke-width="2"/>
+          <line x1="7" y1="16" x2="17" y2="16" stroke="#ffffff" stroke-width="2"/>
+          <line x1="7" y1="4" x2="7" y2="2" stroke="#2b2b2b" stroke-width="2"/>
+          <line x1="17" y1="4" x2="17" y2="2" stroke="#2b2b2b" stroke-width="2"/>
+        </svg>
+        <h1 class="calendar-title">Your Daily Web Calendar</h1>
+      </div>
+      <p class="calendar-subtitle">
+        Small steps every day create big achievements. Stay focused, complete your tasks, and keep moving forward. 🚀
+      </p>
+      <div class="divider-line"></div>
+    </header>
+
+    <!-- Controls Row (Month & Day Dropdowns) -->
+    <form method="GET" action="/index" class="controls-row">
+      <div class="dropdown-wrapper">
+        <select id="monthSelect" name="month" class="custom-select" onchange="this.form.submit()">
+          <option value="January">January</option>
+          <option value="February">February</option>
+          <option value="March">March</option>
+          <option value="April">April</option>
+          <option value="May">May</option>
+          <option value="June">June</option>
+          <option value="July">July</option>
+          <option value="August">August</option>
+          <option value="September">September</option>
+          <option value="October">October</option>
+          <option value="November">November</option>
+          <option value="December">December</option>
+        </select>
+        <span class="dropdown-arrow">▼</span>
+      </div>
+
+      <div class="dropdown-wrapper">
+        <select id="daySelect" name="day" class="custom-select" onchange="this.form.submit()">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+          <option value="13">13</option>
+          <option value="14">14</option>
+          <option value="15">15</option>
+          <option value="16">16</option>
+          <option value="17">17</option>
+          <option value="18">18</option>
+          <option value="19">19</option>
+          <option value="20">20</option>
+          <option value="21">21</option>
+          <option value="22">22</option>
+          <option value="23">23</option>
+          <option value="24">24</option>
+          <option value="25">25</option>
+          <option value="26">26</option>
+          <option value="27">27</option>
+          <option value="28">28</option>
+          <option value="29">29</option>
+          <option value="30">30</option>
+          <option value="31">31</option>
+        </select>
+        <span class="dropdown-arrow">▼</span>
+      </div>
+    </form>
+
+    <!-- Main Content Area: Task to do & Done task -->
+    <main class="tasks-container">
+      <!-- Left Column: Task to do -->
+      <section class="task-column todo-column">
+        <div class="section-title">
+          <span class="icon-star">✪</span>
+          <h2>Task to do</h2>
+        </div>
+        
+        <div class="task-list">
+          {% for task in todo_tasks %}
+            <div class="task-item">
+              <!-- Toggle Complete Form -->
+              <form action="/toggle" method="POST" style="display:inline;">
+                <input type="hidden" name="task_id" value="{{ task.id }}">
+                <input type="hidden" name="month" value="{{ selected_month }}">
+                <input type="hidden" name="day" value="{{ selected_day }}">
+                <button type="submit" class="task-radio" title="Mark Complete">
+                  <span class="task-radio-check">✔</span>
+                </button>
+              </form>
+
+              <!-- Inline Task Edit Form -->
+              <form action="/edit" method="POST" class="task-input-wrapper">
+                <input type="hidden" name="task_id" value="{{ task.id }}">
+                <input type="hidden" name="month" value="{{ selected_month }}">
+                <input type="hidden" name="day" value="{{ selected_day }}">
+                <input type="text" name="text" class="task-input" value="{{ task.text }}" onchange="this.form.submit()">
+              </form>
+
+              <!-- Actions (Pencil & Trash) -->
+              <div class="task-actions">
+                <button type="button" class="btn-edit-inline" title="Edit Task" onclick="this.closest('.task-item').querySelector('.task-input').focus();">✏️</button>
+                <span class="action-separator">/</span>
+                <form action="/delete" method="POST" style="display:inline;">
+                  <input type="hidden" name="task_id" value="{{ task.id }}">
+                  <input type="hidden" name="month" value="{{ selected_month }}">
+                  <input type="hidden" name="day" value="{{ selected_day }}">
+                  <button type="submit" class="btn-trash-inline" title="Delete Task">🗑️</button>
+                </form>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+        <div class="button-group">
+          <form action="/add" method="POST">
+            <input type="hidden" name="month" value="{{ selected_month }}">
+            <input type="hidden" name="day" value="{{ selected_day }}">
+            <button type="submit" class="btn btn-dark">Add</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Vertical Divider for Desktop -->
+      <div class="vertical-divider"></div>
+
+      <!-- Right Column: Done task -->
+      <section class="task-column done-column">
+        <div class="section-title">
+          <span class="icon-check">✔✔</span>
+          <h2>Done task</h2>
+        </div>
+        
+        <div class="task-list">
+          {% for task in done_tasks %}
+            <div class="task-item completed">
+              <!-- Toggle Incomplete Form -->
+              <form action="/toggle" method="POST" style="display:inline;">
+                <input type="hidden" name="task_id" value="{{ task.id }}">
+                <input type="hidden" name="month" value="{{ selected_month }}">
+                <input type="hidden" name="day" value="{{ selected_day }}">
+                <button type="submit" class="task-radio" title="Mark Incomplete">
+                  <span class="task-radio-check" style="display:block;">✔</span>
+                </button>
+              </form>
+
+              <!-- Task Text -->
+              <div class="task-input-wrapper">
+                <input type="text" class="task-input" value="{{ task.text }}" readonly>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var monthSelect = document.getElementById("monthSelect");
+      var daySelect = document.getElementById("daySelect");
+      if (monthSelect) monthSelect.value = "{{ selected_month }}";
+      if (daySelect) daySelect.value = "{{ selected_day }}";
+    });
+  </script>
+</body>
+</html>
