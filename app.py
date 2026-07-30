@@ -3,7 +3,8 @@ import datetime
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import select, insert, update, delete
-from db import engine, users_table, todos_table, init_db
+from db import engine, init_db
+from models import users_table, todos_table
 
 app = Flask(__name__)
 app.secret_key = "super_secret_calendar_key"
